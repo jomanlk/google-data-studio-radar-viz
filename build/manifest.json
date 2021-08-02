@@ -1,0 +1,24 @@
+{
+  "name": "Angelo Viz V4",
+  "organization": "Sandbox",
+  "description": "My first visualization package.",
+  "logoUrl": "https://logo",
+  "organizationUrl": "https://url",
+  "supportUrl": "https://url",
+  "privacyPolicyUrl": "https://url",
+  "termsOfServiceUrl": "https://url",
+  "packageUrl": "https://url",
+  "devMode": true,
+  "components": [
+    {
+      "name": "radarChart-v4",
+      "description": "My first Community Visualization",
+      "iconUrl": "https://url",
+      "resource": {
+        "js": "gs://radar-chart/dev/index.js",
+        "config": "gs://radar-chart/dev/index.json",
+        "css": "gs://radar-chart/dev/index.css"
+      }
+    }
+  ]
+}
