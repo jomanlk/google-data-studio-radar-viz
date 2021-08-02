@@ -2,6 +2,9 @@
   "dsccViz": {
     "gcsDevBucket": "gs://radar-chart/dev",
     "gcsProdBucket": "gs://radar-chart/prod",
+    "jsFile": "index.js",
+    "jsonFile": "index.json",
+    "cssFile": "index.css",
     "components": [
       {
         "jsFile": "index.js",
@@ -24,6 +27,7 @@
     "copy-webpack-plugin": "^4.6.0"
   },
   "dependencies": {
-    "chart.js": "^3.5.0"
+    "chart.js": "^3.5.0",
+    "chartjs-plugin-datalabels": "^2.0.0"
   }
 }

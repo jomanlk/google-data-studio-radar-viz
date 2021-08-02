@@ -6,8 +6,8 @@ export const message = {
           "Rand Al'Thor"
         ],
         "metricID": [
-          99,
-          48,
+          79,
+          68,
           88,
           62
         ]
@@ -19,54 +19,54 @@ export const message = {
         "metricID": [
           87,
           69,
-          69,
-          49
+          79,
+          59
         ]
       },
-      {
-        "dimID": [
-          "Ariel Askos"
-        ],
-        "metricID": [
-          70,
-          78,
-          69,
-          99
-        ]
-      },
-      {
-        "dimID": [
-          "Pant Smith"
-        ],
-        "metricID": [
-          69,
-          78,
-          99,
-          48
-        ]
-      },
-      {
-        "dimID": [
-          "Babe Ruth"
-        ],
-        "metricID": [
-          49,
-          6,
-          74,
-          62
-        ]
-      },
-      {
-        "dimID": [
-          "Matt Smith"
-        ],
-        "metricID": [
-          48,
-          85,
-          41,
-          84
-        ]
-      }
+      // {
+      //   "dimID": [
+      //     "Ariel Askos"
+      //   ],
+      //   "metricID": [
+      //     70,
+      //     78,
+      //     69,
+      //     99
+      //   ]
+      // },
+      // {
+      //   "dimID": [
+      //     "Pant Smith"
+      //   ],
+      //   "metricID": [
+      //     69,
+      //     78,
+      //     99,
+      //     48
+      //   ]
+      // },
+      // {
+      //   "dimID": [
+      //     "Babe Ruth"
+      //   ],
+      //   "metricID": [
+      //     49,
+      //     6,
+      //     74,
+      //     62
+      //   ]
+      // },
+      // {
+      //   "dimID": [
+      //     "Matt Smith"
+      //   ],
+      //   "metricID": [
+      //     48,
+      //     85,
+      //     41,
+      //     84
+      //   ]
+      // }
     ]
   },
   "fields": {

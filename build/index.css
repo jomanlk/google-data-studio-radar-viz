@@ -1,8 +1,15 @@
 body {
   font-family: Roboto;
+  width: 100vh;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
 
-code {
-  background-color: #fdf6e3;
-  color: #586e75;
+iframe {
+}
+
+#myViz {
+  transform: rotate(45deg);
 }
