@@ -22,5 +22,8 @@
     "@google/dscc": "^0.3.17",
     "@google/dscc-scripts": "^1.0.17",
     "copy-webpack-plugin": "^4.6.0"
+  },
+  "dependencies": {
+    "chart.js": "^3.5.0"
   }
 }

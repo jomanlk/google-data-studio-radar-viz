@@ -1,3 +1,10 @@
+# IMPORTANT READ FIRST
+
+For whatever reason dscc-scripts doesn't get installed correctly. Think it's somethign to
+do with the release version. To fix this, you need to manually
+build https://github.com/googledatastudio/tooling/tree/main/packages/dscc-scripts somewhere else
+and then copy it into your node_modules folder
+
 # Data Studio Community Visualization Local Development Template
 
 Data Studio [community visualizations][community viz] allow you to write custom
