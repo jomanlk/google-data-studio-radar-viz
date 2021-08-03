@@ -106,6 +106,7 @@ const config = {
 const drawViz = (data) => {
     // viz.readmeViz();
     // viz.firstViz(data);
+    // npm run update_message -> to see text
 
     config.data = {
         labels: getLabels(data),

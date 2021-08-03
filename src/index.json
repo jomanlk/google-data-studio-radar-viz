@@ -25,5 +25,35 @@
       ]
     }
   ],
-  "style": [ ]
+  "style": [
+    {
+      "id": "styleGroup1",
+      "label": "Header for style group",
+      "elements": [
+        {
+          "id": "linkOpacity",
+          "label": "Link opacity",
+          "type": "OPACITY",
+          "defaultValue": "0.2"
+        }
+      ]
+    }, 
+    {
+      "id": "styleGroup2",
+      "label": "Header for style group #2",
+      "elements": [
+        {
+          "id": "linkOpacity2",
+          "label": "Link opacity 3",
+          "type": "FONT_COLOR",
+          "defaultValue": "0.2"
+        },{
+          "id": "linkOpacity3",
+          "label": "Link opacity 3",
+          "type": "FILL_COLOR",
+          "defaultValue": "0.2"
+        }
+      ]
+    }
+  ]
 }
