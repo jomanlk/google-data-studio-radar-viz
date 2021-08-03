@@ -2,46 +2,25 @@ const dscc = require('@google/dscc');
 const viz = require('@google/dscc-scripts/viz/initialViz.js');
 const local = require('./localMessage.js');
 import { Chart, registerables } from 'chart.js';
+import { quadrantPlugin, myLegendPlugin } from './plugins';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import {
+    trimOrPad,
+    generatePointLabels,
+    generateStyles,
+    hexToRgb,
+    getLabels,
+    getDataSets,
+    getChartContainer,
+} from './helpers';
 
 Chart.register(...registerables);
 // Chart.register(ChartDataLabels);
 
+const MAX_POINT_LABEL_LEN = 12;
+
 // export const LOCAL = false;
 // export const DSCC_IS_LOCAL = false;
-
-const data = {
-    labels: ['Science', 'Biology', 'Radd', 'D2f'],
-    datasets: [
-        {
-            label: 'D0',
-            data: [20, 20, 20, 20],
-            borderColor: 'rgb(255, 99, 132)',
-        },
-    ],
-};
-
-const quadrantPlugin = {
-    id: 'draw_quadrants',
-    beforeDraw: (chart) => {
-        const canvas = chart.canvas;
-        const ctx = canvas.getContext('2d');
-        ctx.save();
-        ctx.lineWidth = 0.1;
-        ctx.beginPath();
-        ctx.moveTo(-15, -15);
-        ctx.lineTo(canvas.width, canvas.height);
-        ctx.stroke();
-
-        ctx.lineWidth = 0.1;
-        ctx.beginPath();
-        ctx.moveTo(canvas.width + 10, 15);
-        ctx.lineTo(0, canvas.height);
-        ctx.stroke();
-
-        ctx.restore();
-    },
-};
 
 Chart.defaults.set('plugins.datalabels', {
     opacity: 1,
@@ -79,28 +58,30 @@ Chart.defaults.set('plugins.datalabels', {
 
 const config = {
     type: 'radar',
-    data: data,
     //plugins: [quadrantPlugin, ChartDataLabels],
-    plugins: [quadrantPlugin],
+    plugins: [quadrantPlugin, myLegendPlugin],
     options: {
         scales: {
             r: {
                 display: true,
                 angleLines: {
-                    color: '#000000',
+                    display: true,
                 },
                 grid: {
                     display: true,
                 },
                 pointLabels: {
+                    display: false,
                     color: '#000000',
+                    callback: (label) => {
+                        return trimOrPad(label, MAX_POINT_LABEL_LEN);
+                    },
                 },
                 ticks: {
                     display: true,
                 },
             },
         },
-
         plugins: {
             legend: {
                 display: false,
@@ -121,42 +102,6 @@ const config = {
     },
 };
 
-const hexToRgb = function (hex, opacity = 0.2) {
-    if (hex.indexOf('#') > -1) {
-        hex = hex.substr(hex.indexOf('#') + 1);
-    }
-
-    var bigint = parseInt(hex, 16);
-    var r = (bigint >> 16) & 255;
-    var g = (bigint >> 8) & 255;
-    var b = bigint & 255;
-
-    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-};
-
-const getLabels = function (vizData) {
-    return vizData.fields.metricID.map((metric) => metric.name);
-};
-
-const getDataSets = function (vizData) {
-    const datasets = [];
-    let seriesId = 0;
-    vizData.tables.DEFAULT.map((row) => {
-        const dataset = {
-            label: row.dimID && row.dimID.length ? row.dimID[0] : '',
-            data: row.metricID,
-            fill: true,
-            borderColor: vizData.theme.themeSeriesColor[seriesId].color,
-            backgroundColor: hexToRgb(
-                vizData.theme.themeSeriesColor[seriesId].color
-            ),
-        };
-        datasets.push(dataset);
-        seriesId++;
-    });
-    return datasets;
-};
-
 // write viz code here
 const drawViz = (data) => {
     // viz.readmeViz();
@@ -167,10 +112,12 @@ const drawViz = (data) => {
         datasets: getDataSets(data),
     };
 
-    var margin = { top: 30, bottom: 30, right: 30, left: 30 };
-
+    var margin = { top: 0, bottom: 0, right: 0, left: 0 };
     var height = dscc.getHeight() - margin.top - margin.bottom;
     var width = dscc.getWidth() - margin.left - margin.right;
+
+    generatePointLabels(getLabels(data));
+    generateStyles(width, height, data);
 
     var canvasElement = document.createElement('canvas');
     var ctx = canvasElement.getContext('2d');
@@ -182,7 +129,7 @@ const drawViz = (data) => {
     if (chartElem) {
         chartElem.remove();
     }
-    document.body.appendChild(canvasElement);
+    getChartContainer().appendChild(canvasElement);
 
     var myRadarChart = new Chart(ctx, config);
 };
