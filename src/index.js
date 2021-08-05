@@ -5,6 +5,8 @@ import { Chart, registerables } from 'chart.js';
 import { quadrantPlugin, myLegendPlugin } from './plugins';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {
+    getPopulateConfigs,
+    getData,
     trimOrPad,
     generatePointLabels,
     generateStyles,
@@ -15,7 +17,7 @@ import {
 } from './helpers';
 
 Chart.register(...registerables);
-// Chart.register(ChartDataLabels);
+Chart.register(ChartDataLabels);
 
 const MAX_POINT_LABEL_LEN = 12;
 
@@ -56,61 +58,65 @@ Chart.defaults.set('plugins.datalabels', {
     },
 });
 
-const config = {
-    type: 'radar',
-    //plugins: [quadrantPlugin, ChartDataLabels],
-    plugins: [quadrantPlugin, myLegendPlugin],
-    options: {
-        scales: {
-            r: {
-                display: true,
-                angleLines: {
-                    display: true,
-                },
-                grid: {
-                    display: true,
-                },
-                pointLabels: {
-                    display: false,
-                    color: '#000000',
-                    callback: (label) => {
-                        return trimOrPad(label, MAX_POINT_LABEL_LEN);
-                    },
-                },
-                ticks: {
-                    display: true,
-                },
-            },
-        },
-        plugins: {
-            legend: {
-                display: false,
-            },
-            filler: {
-                propagate: false,
-            },
-            'samples-filler-analyser': {
-                target: 'chart-analyser',
-            },
-            tooltip: {
-                enabled: true,
-            },
-        },
-        interaction: {
-            intersect: false,
-        },
-    },
-};
-
 // write viz code here
 const drawViz = (data) => {
     // viz.readmeViz();
     // viz.firstViz(data);
     // npm run update_message -> to see text
 
-    config.data = {
-        labels: getLabels(data),
-        datasets: getDataSets(data),
+    const configData = getPopulateConfigs(data);
+
+    const config = {
+        type: 'radar',
+        data: {
+            labels: getLabels(data),
+            datasets: getDataSets(data),
+        },
+        //plugins: [quadrantPlugin, ChartDataLabels],
+        plugins: [quadrantPlugin, myLegendPlugin],
+        options: {
+            scales: {
+                r: {
+                    display: true,
+                    suggestedMax: configData.SCALE.MAX,
+                    suggestedMin: configData.SCALE.MIN,
+                    angleLines: {
+                        display: true,
+                        color: configData.COLORS.ANGLE_LINE,
+                    },
+                    grid: {
+                        display: true,
+                        color: configData.COLORS.GRID_LINE,
+                    },
+                    pointLabels: {
+                        display: false,
+                    },
+                    ticks: {
+                        display: configData.COMPONENT.SCALE_TICK,
+                        color: configData.COLORS.SCALE_TICK,
+                        backdropColor: configData.BG.SCALE_TICK,
+                    },
+                },
+            },
+            plugins: {
+                datalabels: configData.COMPONENT.DATA_LABEL,
+                quadrants: {
+                    color: configData.COLORS.QUADRANT_LINE,
+                },
+                legend: {
+                    display: false,
+                },
+                filler: {
+                    propagate: false,
+                },
+                tooltip: {
+                    enabled: configData.COMPONENT.TOOLTIP,
+                },
+            },
+            interaction: {
+                intersect: false,
+            },
+        },
     };
 
     var margin = { top: 0, bottom: 0, right: 0, left: 0 };
@@ -118,7 +124,7 @@ const drawViz = (data) => {
     var width = dscc.getWidth() - margin.left - margin.right;
 
     generatePointLabels(getLabels(data));
-    generateStyles(width, height, data);
+    generateStyles(width, height, configData);
 
     var canvasElement = document.createElement('canvas');
     var ctx = canvasElement.getContext('2d');

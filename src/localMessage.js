@@ -2,35 +2,36 @@ export const message = {
     tables: {
         DEFAULT: [
             {
-                dimID: ["Rand Al'Thor"],
-                metricID: [79, 68, 88, 62],
-            },
-            {
-                dimID: ['Simone Sant'],
-                metricID: [87, 69, 79, 59],
-            },
-            {
                 dimID: ['Ariel Askos'],
-                metricID: [70, 78, 69, 99],
-            },
-            {
-                dimID: ['Pant Smith'],
-                metricID: [69, 78, 99, 48],
-            },
-            {
-                dimID: ['Babe Ruth'],
-                metricID: [49, 6, 74, 62],
+                metricID: [99, 78, 69, 70],
             },
             {
                 dimID: ['Matt Smith'],
-                metricID: [48, 85, 41, 84],
+                metricID: [84, 85, 41, 48],
+            },
+            {
+                dimID: ['Babe Ruth'],
+                metricID: [62, 67, 74, 49],
+            },
+            {
+                dimID: ["Rand Al'Thor"],
+                metricID: [62, 48, 88, 99],
+            },
+            {
+                dimID: ['Simone Sant'],
+                metricID: [49, 69, 69, 87],
+            },
+            {
+                dimID: ['Pant Smith'],
+                metricID: [48, 78, 99, 69],
             },
         ],
     },
+    dateRanges: {},
     fields: {
         dimID: [
             {
-                id: 'qt_tv6n4kh6lc',
+                id: 'qt_cb558xw6lc',
                 name: 'Names',
                 type: 'TEXT',
                 concept: 'DIMENSION',
@@ -38,32 +39,109 @@ export const message = {
         ],
         metricID: [
             {
-                id: 'qt_3e3u4jh6lc',
-                name: 'Biology',
+                id: 'qt_db558xw6lc',
+                name: 'Chemistry',
                 type: 'NUMBER',
                 concept: 'METRIC',
             },
             {
-                id: 'qt_w63u4jh6lc',
+                id: 'qt_eb558xw6lc',
                 name: 'English',
                 type: 'NUMBER',
                 concept: 'METRIC',
             },
             {
-                id: 'qt_x63u4jh6lc',
+                id: 'qt_fb558xw6lc',
                 name: 'Mathematics',
                 type: 'NUMBER',
                 concept: 'METRIC',
             },
             {
-                id: 'qt_y63u4jh6lc',
-                name: 'Chemistryyyyyyyyyyy',
+                id: 'qt_gb558xw6lc',
+                name: 'Biology',
                 type: 'NUMBER',
                 concept: 'METRIC',
             },
         ],
     },
-    style: {},
+    style: {
+        componentDataLabel: {
+            value: false,
+            defaultValue: false,
+        },
+        componentTick: {
+            value: true,
+            defaultValue: false,
+        },
+        componentTooltip: {
+            value: false,
+            defaultValue: false,
+        },
+        scaleMin: {
+            value: '',
+            defaultValue: '',
+        },
+        scaleMax: {
+            value: '',
+            defaultValue: '',
+        },
+        colorQuadrantLine: {
+            value: {
+                color: '#666666',
+            },
+            defaultValue: {
+                color: '#000000',
+            },
+        },
+        colorGridLine: {
+            value: {
+                color: '#000000',
+            },
+            defaultValue: {
+                color: '#000000',
+            },
+        },
+        colorAngleLine: {
+            value: {
+                color: '#000000',
+            },
+            defaultValue: {
+                color: '#000000',
+            },
+        },
+        colorPointLabel: {
+            value: {
+                color: '#000000',
+            },
+            defaultValue: {
+                color: '#000000',
+            },
+        },
+        colorScaleTick: {
+            value: {
+                color: '#43A047',
+            },
+            defaultValue: {
+                color: '#000000',
+            },
+        },
+        bgPointLabel: {
+            value: {
+                color: '#C2185B',
+            },
+            defaultValue: {
+                color: '#ffffff',
+            },
+        },
+        bgScaleTick: {
+            value: {
+                color: '#6A1B9A',
+            },
+            defaultValue: {
+                color: '#ffffff',
+            },
+        },
+    },
     theme: {
         themeFillColor: {
             color: '#ffffff',

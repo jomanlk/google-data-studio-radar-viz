@@ -1,3 +1,51 @@
+export const getPopulateConfigs = function (data) {
+    const configs = {
+        SCALE: {
+            MIN: getItem('style.scaleMin.value', data) || undefined,
+            MAX: getItem('style.scaleMax.value', data) || undefined,
+        },
+        COLORS: {
+            QUADRANT_LINE:
+                getItem('style.colorQuadrantLine.value.color', data) ||
+                undefined,
+            GRID_LINE:
+                getItem('style.colorGridLine.value.color', data) || undefined,
+            ANGLE_LINE:
+                getItem('style.colorAngleLine.value.color', data) || undefined,
+            POINT_LABEL:
+                getItem('style.colorPointLabel.value.color', data) || undefined,
+            SCALE_TICK:
+                getItem('style.colorScaleTick.value.color', data) || undefined,
+        },
+        BG: {
+            SCALE_TICK:
+                getItem('style.bgScaleTick.value.color', data) || undefined,
+            POINT_LABEL:
+                getItem('style.bgPointLabel.value.color', data) || undefined,
+        },
+        COMPONENT: {
+            DATA_LABEL: getItem('style.componentDataLabel.value', data),
+            SCALE_TICK: getItem('style.componentTick.value', data),
+            TOOLTIP: getItem('style.componentTooltip.value', data),
+        },
+    };
+
+    return configs;
+};
+
+export const getItem = function (key, data, def = '') {
+    const keys = key.split('.');
+    let ref = data;
+    while (keys.length > 0) {
+        const key = keys.shift();
+        if (typeof ref[key] == 'undefined') {
+            return def;
+        }
+        ref = ref[key];
+    }
+    return ref;
+};
+
 export const getChartContainer = function () {
     let div = document.getElementById('chartContainer');
     if (!div) {
@@ -23,32 +71,37 @@ export const generatePointLabels = function (labels) {
         if (!domEl) {
             domEl = document.createElement('div');
             domEl.id = selector;
-            domEl.innerHTML = trimOrPad(labels.pop(), 13);
             domEl.classList.add('label', selector);
             getChartContainer().appendChild(domEl);
         }
+        domEl.innerHTML = `<span>${trimOrPad(labels.pop(), 13)}</span>`;
     });
 };
 
-export const generateStyles = function (width, height, data) {
+export const generateStyles = function (width, height, configData) {
     let style = document.getElementById('vizStyles');
     if (!style) {
-        const smallerDimension = Math.min(width, height);
-        let style = document.createElement('style');
+        style = document.createElement('style');
         style.type = 'text/css';
         style.id = 'vizStyles';
-        style.innerHTML = `
+        document.getElementsByTagName('head')[0].appendChild(style);
+    }
+    const smallerDimension = Math.min(width, height);
+    style.innerHTML = `
         #chartContainer {   
           width: calc(${smallerDimension}px - 60px); 
           height: calc(${smallerDimension}px - 60px);  
+        }
+
+        .label span {
+            color: ${configData.COLORS.POINT_LABEL};
+            background: ${configData.BG.POINT_LABEL};
         }
         
         .vizLegend {
             width: ${smallerDimension}px;
         }
-        `;
-        document.getElementsByTagName('head')[0].appendChild(style);
-    }
+     `;
 };
 
 export const hexToRgb = function (hex, opacity = 0.2) {

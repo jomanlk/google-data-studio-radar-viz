@@ -27,32 +27,91 @@
   ],
   "style": [
     {
-      "id": "styleGroup1",
-      "label": "Header for style group",
+      "id": "componentStyle",
+      "label": "Components",
       "elements": [
         {
-          "id": "linkOpacity",
-          "label": "Link opacity",
-          "type": "OPACITY",
-          "defaultValue": "0.2"
+          "id": "componentDataLabel",
+          "label": "Turn on Data label",
+          "type": "CHECKBOX",
+          "defaultValue" : false
+        },
+        {
+          "id": "componentTick",
+          "label": "Turn on Scale Tick",
+          "type": "CHECKBOX",
+          "defaultValue" : true
+        },
+        {
+          "id": "componentTooltip",
+          "label": "Turn on Tooltip",
+          "type": "CHECKBOX",
+          "defaultValue" : true
+        }
+      ]
+    },
+    {
+      "id": "scaleStyle",
+      "label": "Scales",
+      "elements": [
+        {
+          "id": "scaleMin",
+          "label": "Scale Min",
+          "type": "TEXTINPUT"
+        },
+        {
+          "id": "scaleMax",
+          "label": "Scale Max",
+          "type": "TEXTINPUT"
         }
       ]
     }, 
     {
-      "id": "styleGroup2",
-      "label": "Header for style group #2",
+      "id": "colorStyle",
+      "label": "Colors",
       "elements": [
         {
-          "id": "linkOpacity2",
-          "label": "Link opacity 3",
+          "id": "colorQuadrantLine",
+          "label": "Quadrant Line Color",
+          "type": "AXIS_COLOR",
+          "defaultValue" : {"color" : "#000000"}
+        }, {
+          "id": "colorGridLine",
+          "label": "Gride Line Color",
+          "type": "AXIS_COLOR",
+          "defaultValue" : {"color" : "#000000"}
+        }, {
+          "id": "colorAngleLine",
+          "label": "Angle Line Color",
+          "type": "AXIS_COLOR",
+          "defaultValue" : {"color" : "#000000"}
+        }, {
+          "id": "colorPointLabel",
+          "label": "Point Label Color",
           "type": "FONT_COLOR",
-          "defaultValue": "0.2"
-        },{
-          "id": "linkOpacity3",
-          "label": "Link opacity 3",
-          "type": "FILL_COLOR",
-          "defaultValue": "0.2"
+          "defaultValue" : {"color" : "#000000"}
+        }, {
+          "id": "colorScaleTick",
+          "label": "Scale Tick Color",
+          "type": "FONT_COLOR",
+          "defaultValue" : {"color" : "#000000"}
         }
+      ]
+    }, {
+      "id": "bgStyle",
+      "label": "Background Colors",
+      "elements": [
+        {
+          "id": "bgPointLabel",
+          "label": "Point Label Background",
+          "type": "FILL_COLOR",
+          "defaultValue" : {"color" : "#ffffff"}
+        }, {
+          "id": "bgScaleTick",
+          "label": "Scale Tick Background",
+          "type": "AXIS_COLOR",
+          "defaultValue" : {"color" : "#ffffff"}
+        } 
       ]
     }
   ]

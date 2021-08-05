@@ -1,17 +1,21 @@
 export const quadrantPlugin = {
-    id: 'draw_quadrants',
-    afterDraw: (chart) => {
+    id: 'quadrants',
+    afterDraw: (chart, args, options) => {
+        const lineColor = options.color || '#000000';
         const canvas = chart.canvas;
         const lengthAdjust = canvas.width / 4;
         const ctx = canvas.getContext('2d');
+
         ctx.save();
-        ctx.lineWidth = 0.1;
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(lengthAdjust, lengthAdjust + 10);
         ctx.lineTo(canvas.width - lengthAdjust, canvas.height - lengthAdjust);
         ctx.stroke();
 
-        ctx.lineWidth = 0.1;
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(lengthAdjust * 3 - 3, lengthAdjust + 7);
         ctx.lineTo(lengthAdjust, canvas.height - lengthAdjust);
