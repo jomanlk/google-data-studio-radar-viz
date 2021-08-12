@@ -24,40 +24,6 @@ const MAX_POINT_LABEL_LEN = 12;
 // export const LOCAL = false;
 // export const DSCC_IS_LOCAL = false;
 
-Chart.defaults.set('plugins.datalabels', {
-    opacity: 1,
-    textAlign: 'left',
-    color: 'white',
-    borderColor: '#11469e',
-    borderWidth: 2,
-    borderRadius: 100,
-    font: {
-        weight: 'bold',
-        size: 12,
-        lineHeight: 1 /* align v center */,
-    },
-    padding: {
-        top: 5,
-    },
-    /* hover styling */
-    backgroundColor: function (context) {
-        return context.hovered ? context.dataset.borderColor : 'white';
-    },
-    color: function (context) {
-        return context.hovered ? 'white' : context.dataset.borderColor;
-    },
-    listeners: {
-        enter: function (context) {
-            context.hovered = true;
-            return true;
-        },
-        leave: function (context) {
-            context.hovered = false;
-            return true;
-        },
-    },
-});
-
 // write viz code here
 const drawViz = (data) => {
     // viz.readmeViz();
@@ -66,15 +32,63 @@ const drawViz = (data) => {
 
     const configData = getPopulateConfigs(data);
 
+    let quadrantOpts = {
+        color: configData.COLORS.QUADRANT_LINE,
+    };
+    if (configData.COMPONENT.QUADRANT === false) {
+        quadrantOpts = false;
+    }
+
+    Chart.defaults.set('plugins.datalabels', {
+        opacity: 1,
+        textAlign: 'left',
+        color: 'white',
+        borderColor: '#11469e',
+        borderWidth: 2,
+        borderRadius: 100,
+        font: {
+            weight: 'bold',
+            size: configData.FONTSIZE.DATA_LABEL,
+            lineHeight: 1 /* align v center */,
+        },
+        padding: {
+            top: 5,
+        },
+        /* hover styling */
+        backgroundColor: function (context) {
+            return context.hovered ? context.dataset.borderColor : 'white';
+        },
+        color: function (context) {
+            return context.hovered ? 'white' : context.dataset.borderColor;
+        },
+        listeners: {
+            enter: function (context) {
+                context.hovered = true;
+                return true;
+            },
+            leave: function (context) {
+                context.hovered = false;
+                return true;
+            },
+        },
+    });
+
     const config = {
         type: 'radar',
         data: {
             labels: getLabels(data),
             datasets: getDataSets(data),
         },
-        //plugins: [quadrantPlugin, ChartDataLabels],
         plugins: [quadrantPlugin, myLegendPlugin],
         options: {
+            layout: {
+                padding: {
+                    top: 0,
+                    bottom: 8,
+                    left: 4,
+                    right: 3,
+                },
+            },
             scales: {
                 r: {
                     display: true,
@@ -92,17 +106,24 @@ const drawViz = (data) => {
                         display: false,
                     },
                     ticks: {
-                        display: configData.COMPONENT.SCALE_TICK,
-                        color: configData.COLORS.SCALE_TICK,
-                        backdropColor: configData.BG.SCALE_TICK,
+                        display: true,
+                        // color: configData.COLORS.SCALE_TICK,
+                        // backdropColor: configData.BG.SCALE_TICK,
+                        font: {
+                            size: configData.FONTSIZE.SCALE_TICK,
+                        },
+                        color: configData.COMPONENT.SCALE_TICK
+                            ? configData.COLORS.SCALE_TICK
+                            : 'rgba(0, 0, 0, 0)',
+                        backdropColor: configData.COMPONENT.SCALE_TICK
+                            ? configData.BG.SCALE_TICK
+                            : 'rgba(0, 0, 0, 0)',
                     },
                 },
             },
             plugins: {
                 datalabels: configData.COMPONENT.DATA_LABEL,
-                quadrants: {
-                    color: configData.COLORS.QUADRANT_LINE,
-                },
+                quadrants: quadrantOpts,
                 legend: {
                     display: false,
                 },
@@ -119,9 +140,8 @@ const drawViz = (data) => {
         },
     };
 
-    var margin = { top: 0, bottom: 0, right: 0, left: 0 };
-    var height = dscc.getHeight() - margin.top - margin.bottom;
-    var width = dscc.getWidth() - margin.left - margin.right;
+    var height = dscc.getHeight();
+    var width = dscc.getWidth();
 
     generatePointLabels(getLabels(data));
     generateStyles(width, height, configData);

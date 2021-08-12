@@ -17,7 +17,7 @@ body {
 .label {
     position: absolute;
     z-index: 12;
-    top: 50%;
+    top: 49%;
     left: 50%;
     font-size: 12px;
     width: 80px;
@@ -47,7 +47,7 @@ body {
 #leftLabel.label {
     right: auto;
     left: 10px;
-    transform: rotate(-90deg);
+    transform: rotate(90deg);
 }
 
 .vizLegend {
@@ -73,14 +73,13 @@ body {
 
 .vizLegend .color {
     pointer-events: none;
-    width: 40px;
-    height: 10px;
     display: inline-block;
     margin-right: 5px;
     border: 2px solid;
-    vertical-align: text-top;
+    vertical-align: middle;
 }
 
 .vizLegend .legend {
     pointer-events: none;
+    vertical-align: middle;
 }

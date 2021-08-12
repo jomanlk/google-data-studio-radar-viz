@@ -34,19 +34,25 @@
           "id": "componentDataLabel",
           "label": "Turn on Data label",
           "type": "CHECKBOX",
-          "defaultValue" : false
+          "defaultValue" : "false"
         },
         {
           "id": "componentTick",
           "label": "Turn on Scale Tick",
           "type": "CHECKBOX",
-          "defaultValue" : true
+          "defaultValue" : "true"
         },
         {
           "id": "componentTooltip",
           "label": "Turn on Tooltip",
           "type": "CHECKBOX",
-          "defaultValue" : true
+          "defaultValue" : "true"
+        },
+        {
+          "id": "componentQuadrant",
+          "label": "Turn on Quadrant",
+          "type": "CHECKBOX",
+          "defaultValue" : "false"
         }
       ]
     },
@@ -111,6 +117,33 @@
           "label": "Scale Tick Background",
           "type": "AXIS_COLOR",
           "defaultValue" : {"color" : "#ffffff"}
+        } 
+      ]
+    }, {
+      "id": "fontSize",
+      "label": "Font Sizes",
+      "elements": [
+        {
+          "id": "fontSizePointLabel",
+          "label": "Point Label Font Size",
+          "type": "FONT_SIZE",
+          "defaultValue": "12"
+          
+        }, {
+          "id": "fontSizeLegendText",
+          "label": "Legend Font Size",
+          "type": "FONT_SIZE",
+          "defaultValue": "12"
+        },  {
+          "id": "fontSizeScaleTick",
+          "label": "Scale Tick Font Size",
+          "type": "FONT_SIZE",
+          "defaultValue": "12"
+        }, {
+          "id": "fontSizeScaleDataLabel",
+          "label": "Data Label Font Size",
+          "type": "FONT_SIZE",
+          "defaultValue": "12"
         } 
       ]
     }

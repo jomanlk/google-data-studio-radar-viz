@@ -27,6 +27,13 @@ export const getPopulateConfigs = function (data) {
             DATA_LABEL: getItem('style.componentDataLabel.value', data),
             SCALE_TICK: getItem('style.componentTick.value', data),
             TOOLTIP: getItem('style.componentTooltip.value', data),
+            QUADRANT: getItem('style.componentQuadrant.value', data),
+        },
+        FONTSIZE: {
+            POINT_LABEL: getItem('style.fontSizePointLabel.value', data, 12),
+            LEGEND_TEXT: getItem('style.fontSizeLegendText.value', data, 12),
+            SCALE_TICK: getItem('style.fontSizeScaleTick.value', data, 12),
+            DATA_LABEL: getItem('style.fontSizeScaleDataLabel.value', data, 12),
         },
     };
 
@@ -74,7 +81,7 @@ export const generatePointLabels = function (labels) {
             domEl.classList.add('label', selector);
             getChartContainer().appendChild(domEl);
         }
-        domEl.innerHTML = `<span>${trimOrPad(labels.pop(), 13)}</span>`;
+        domEl.innerHTML = `<span>${trimOrPad(labels.shift(), 13)}</span>`;
     });
 };
 
@@ -87,6 +94,11 @@ export const generateStyles = function (width, height, configData) {
         document.getElementsByTagName('head')[0].appendChild(style);
     }
     const smallerDimension = Math.min(width, height);
+
+    //Figure out the size of the legend color block by scaling it along font
+    const legendBlockScale = configData.FONTSIZE.LEGEND_TEXT / 12; //12 is the baseline font size
+    const legendBlockBaseline = { width: 30, height: 10 };
+
     style.innerHTML = `
         #chartContainer {   
           width: calc(${smallerDimension}px - 60px); 
@@ -96,10 +108,24 @@ export const generateStyles = function (width, height, configData) {
         .label span {
             color: ${configData.COLORS.POINT_LABEL};
             background: ${configData.BG.POINT_LABEL};
+            font-size: ${configData.FONTSIZE.POINT_LABEL}px;
         }
         
         .vizLegend {
             width: ${smallerDimension}px;
+        }
+
+        .vizLegend .legend {
+            font-size: ${configData.FONTSIZE.LEGEND_TEXT}px;
+        }
+
+        .vizLegend .color {
+            width: ${Math.round(
+                legendBlockBaseline.width * legendBlockScale
+            )}px;
+            height: ${Math.round(
+                legendBlockBaseline.height * legendBlockScale
+            )}px;
         }
      `;
 };
@@ -118,7 +144,7 @@ export const hexToRgb = function (hex, opacity = 0.2) {
 };
 
 export const getLabels = function (vizData) {
-    return vizData.fields.metricID.map((metric) => metric.name);
+    return vizData.fields.metricID.map((metric) => metric.name); //.reverse();
 };
 
 export const getDataSets = function (vizData) {
@@ -127,7 +153,9 @@ export const getDataSets = function (vizData) {
     vizData.tables.DEFAULT.map((row) => {
         const dataset = {
             label: row.dimID && row.dimID.length ? row.dimID[0] : '',
-            data: row.metricID,
+            data: row.metricID.map(
+                (num) => Math.round((num + Number.EPSILON) * 100) / 100
+            ),
             fill: true,
             borderColor: vizData.theme.themeSeriesColor[seriesId].color,
             backgroundColor: hexToRgb(
